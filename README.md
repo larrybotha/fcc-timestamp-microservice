@@ -1,4 +1,4 @@
-# Freecodecamp - Tiemstamp Microservice
+# Freecodecamp - Timestamp Microservice
 
 https://www.freecodecamp.org/challenges/timestamp-microservice
 
