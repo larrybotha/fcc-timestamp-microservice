@@ -9,6 +9,8 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 
+const timestampHandler = require('./timestamp-route-handler');
+
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
     var allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
@@ -37,6 +39,17 @@ app.route('/')
     .get(function(req, res) {
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
+
+const ignoreRequests = (req, res, next) => {
+  if (/(favicon.ico|robots.txt)/.test(req.originalUrl)) {
+    req.sendStatus(204);
+  } else {
+    next();
+  }
+}
+
+app.use(ignoreRequests);
+app.use(timestampHandler);
 
 // Respond not found to all the wrong routes
 app.use(function(req, res, next){
